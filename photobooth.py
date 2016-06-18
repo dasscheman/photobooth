@@ -125,11 +125,11 @@ def start_photobooth():
 	
   ########################### Begin Step 4 #################################
 	
-  subprocess.call("sudo /home/pi/scripts/photobooth/assemble.sh", shell=True)
+  subprocess.call("sudo /home/pi/photobooth/scripts/assemble.sh", shell=True)
   if config.print_pic:
       print "Start printing"
       GPIO.output(led4_pin_print, True) #turn on the LED
-      subprocess.call("sudo /home/pi/scripts/photobooth/print.sh", shell=True)
+      subprocess.call("sudo /home/pi/photobooth/scripts/print.sh", shell=True)
       GPIO.output(led4_pin_print, False) #turn off the LED
 
   time.sleep(config.restart_delay)
