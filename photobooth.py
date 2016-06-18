@@ -65,33 +65,33 @@ def exit_photobooth(channel):
   time.sleep(3)
   sys.exit()
     
-def clear_pics(foo): #why is this function being passed an arguments?
-  #delete files in folder on startup
-    files = glob.glob(config.file_path + '*')
-    for f in files:
-      os.remove(f) 
-    #light the lights in series to show completed
-    print "Deleted previous pics"
-    GPIO.output(led1_pin_get_ready, False); #turn off the lights
-    GPIO.output(led2_pin_smile, False);
-    GPIO.output(led3_pin_process, False);
-    GPIO.output(led4_pin_print, False);
-    GPIO.output(led5_pin_button, False);
-    pins = [led1_pin_get_ready, led2_pin_smile, led3_pin_process, led4_pin_print, led5_pin_button]
-    for p in pins:
-      GPIO.output(p, True); 
-      sleep(0.25)
-      GPIO.output(p, False);
-      sleep(0.25) 
-				
+#def clear_pics(foo): #why is this function being passed an arguments?
+#  #delete files in folder on startup
+#    files = glob.glob(config.file_path + '*')
+#    for f in files:
+#      os.remove(f) 
+#    #light the lights in series to show completed
+#    print "Deleted previous pics"
+#    GPIO.output(led1_pin_get_ready, False); #turn off the lights
+#    GPIO.output(led2_pin_smile, False);
+#    GPIO.output(led3_pin_process, False);
+#    GPIO.output(led4_pin_print, False);
+#    GPIO.output(led5_pin_button, False);
+#    pins = [led1_pin_get_ready, led2_pin_smile, led3_pin_process, led4_pin_print, led5_pin_button]
+#    for p in pins:
+#      GPIO.output(p, True); 
+#      sleep(0.25)
+#      GPIO.output(p, False);
+#      sleep(0.25) 
+#				
 # define the photo taking function for when the big button is pressed 
 def start_photobooth(): 
   
   GPIO.output(led5_pin_button, False)
   # delete files in folder on startup
-  files = glob.glob(config.file_path + '*')
-  for f in files:
-    os.remove(f)
+#  files = glob.glob(config.file_path + '*')
+#  for f in files:
+#    os.remove(f)
   ################################# Begin Step 1 ################################# 
   print "Get Ready"
   GPIO.output(led1_pin_get_ready, True);
