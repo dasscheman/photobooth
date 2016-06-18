@@ -1,6 +1,6 @@
 # Copy this file to config.py and replace the values with your information
-file_path = '~/home/pi/photobooth/pics/' # path to save images tempory
-file_path_gif = '~/home/pi/Website/pibooth/web/photobooth/' # path to save images for site
+file_path = '/home/pi/photobooth/pics/' # path to save images tempory
+file_path_gif = '/home/pi/Website/pibooth/web/photobooth/' # path to save images for site
 
 post_online = 1 # default 1. Change to 0 if you don't want to upload pics.
 print_pic = 1 # default 1. Change to 0 if you don't want to print pics.
