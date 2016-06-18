@@ -1,6 +1,4 @@
 #!/usr/bin/env python
-# created by chris@drumminhands.com
-# see instructions at http://www.drumminhands.com/2014/06/15/raspberry-pi-photo-booth/
 
 import RPi.GPIO as GPIO
 import atexit
@@ -104,34 +102,34 @@ def start_photobooth():
   ################################# Begin Step 2 #################################
   print "Taking pics" 
   for i in range(0, config.total_pics):
-    GPIO.output(led2_pin_smile, True) #turn on the LED
-    now = time.strftime("%Y-%m-%d-%H:%M:%S") #get the current date and time for the start of the filename
-    gpout = subprocess.check_output("gphoto2 --capture-image-and-download --filename " + config.file_path + now + ".jpg", stderr=subprocess.STDOUT, shell=True)
-    print(gpout)
-    sleep(0.25) #pause the LED on for just a bit
-    GPIO.output(led2_pin_smile, False) #turn off the LED
-    sleep(capture_delay) # pause in-between shots
-    if i == total_pics-1:
-      break
+      GPIO.output(led2_pin_smile, True) #turn on the LED
+      now = time.strftime("%Y-%m-%d-%H:%M:%S") #get the current date and time for the start of the filename
+      gpout = subprocess.check_output("gphoto2 --capture-image-and-download --filename " + config.file_path + now + ".jpg", stderr=subprocess.STDOUT, shell=True)
+      print(gpout)
+      sleep(0.25) #pause the LED on for just a bit
+      GPIO.output(led2_pin_smile, False) #turn off the LED
+      sleep(capture_delay) # pause in-between shots
+      if i == total_pics-1:
+        break
 
   ########################### Begin Step 3 #################################  
   if config.post_online:
-    print "Creating an animated gif" 
+      print "Creating an animated gif" 
 
-    GPIO.output(led3_pin_process, True) #turn on the LED
-    graphicsmagick = "gm convert -delay " + str(config.gif_delay) + " " + config.file_path + "*.jpg " + config.file_path_gif + now + ".gif" 
-    os.system(graphicsmagick) #make the .gif
-    print "Uploading to pibooth."
+      GPIO.output(led3_pin_process, True) #turn on the LED
+      graphicsmagick = "gm convert -delay " + str(config.gif_delay) + " " + config.file_path + "*.jpg " + config.file_path_gif + now + ".gif" 
+      os.system(graphicsmagick) #make the .gif
+      print "Uploading to pibooth."
 
-    GPIO.output(led3_pin, False) #turn off the LED
+      GPIO.output(led3_pin, False) #turn off the LED
 	
   ########################### Begin Step 4 #################################
 	
   subprocess.call("sudo /home/pi/scripts/photobooth/assemble.sh", shell=True)
   if config.print_pic:
-    print "Start printing"
-    GPIO.output(led4_pin_print, True) #turn on the LED
-    subprocess.call("sudo /home/pi/scripts/photobooth/print.sh", shell=True)
+      print "Start printing"
+      GPIO.output(led4_pin_print, True) #turn on the LED
+      subprocess.call("sudo /home/pi/scripts/photobooth/print.sh", shell=True)
 
 
     GPIO.output(led4_pin_print, False) #turn off the LED
@@ -165,6 +163,6 @@ GPIO.output(led4_pin_print, False);
 GPIO.output(led5_pin_button, False);
 
 while True:
-  GPIO.wait_for_edge(button1_pin_start, GPIO.FALLING)
-  time.sleep(0.2) #debounce
-	start_photobooth()
+    GPIO.wait_for_edge(button1_pin_start, GPIO.FALLING)
+    time.sleep(0.2) #debounce
+    start_photobooth()
