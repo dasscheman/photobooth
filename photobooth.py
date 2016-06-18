@@ -121,7 +121,7 @@ def start_photobooth():
       os.system(graphicsmagick) #make the .gif
       print "Uploading to pibooth."
 
-      GPIO.output(led3_pin, False) #turn off the LED
+      GPIO.output(led3_pin_process, False) #turn off the LED
 	
   ########################### Begin Step 4 #################################
 	
