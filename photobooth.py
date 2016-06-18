@@ -109,7 +109,7 @@ def start_photobooth():
       sleep(0.25) #pause the LED on for just a bit
       GPIO.output(led2_pin_smile, False) #turn off the LED
       sleep(config.capture_delay) # pause in-between shots
-      if i == total_pics-1:
+      if i == config.total_pics-1:
         break
 
   ########################### Begin Step 3 #################################  
