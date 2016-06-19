@@ -125,8 +125,8 @@ def start_photobooth():
     time.sleep(config.restart_delay)
     # blink led5_pin_finished 50 times  
     for i in range(0,5):  
-        blink(led5_pin_finished) 
-    GPIO.output(led5_pin_button, True)
+        blink(led5_pin_ready) 
+    GPIO.output(led5_pin_ready, True)
 
 ####################
 ### Main Program ###
