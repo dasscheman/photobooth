@@ -17,8 +17,8 @@ led1_pin_get_ready = 15 # LED 1
 led2_pin_smile = 19 # LED 2
 led3_pin_process = 21 # LED 3
 led4_pin_print = 23 # LED 4
-led5_pin_button = 13
-led6_pin_finished = 11
+#led5_pin_button = 13
+#led6_pin_finished = 11
 button1_pin_start = 22 # pin for the big red button
 button2_pin_shutdown = 18 # pin for button to shutdown the pi
 button3_pin_reset = 16 # pin for button to end the program, but not shutdown the pi
@@ -31,8 +31,8 @@ GPIO.setup(led1_pin_get_ready, GPIO.OUT) # LED 1
 GPIO.setup(led2_pin_smile, GPIO.OUT) # LED 2
 GPIO.setup(led3_pin_process, GPIO.OUT) # LED 3
 GPIO.setup(led4_pin_print, GPIO.OUT) # LED 4
-GPIO.setup(led5_pin_button, GPIO.OUT) # LED 5
-GPIO.setup(led6_pin_finished, GPIO.OUT) # LED 6
+#GPIO.setup(led5_pin_button, GPIO.OUT) # LED 5
+#GPIO.setup(led6_pin_finished, GPIO.OUT) # LED 6
 GPIO.setup(button1_pin_start, GPIO.IN, pull_up_down=GPIO.PUD_UP) # falling edge detection on button 1
 GPIO.setup(button2_pin_shutdown, GPIO.IN, pull_up_down=GPIO.PUD_UP) # falling edge detection on button 2
 GPIO.setup(button3_pin_reset, GPIO.IN, pull_up_down=GPIO.PUD_UP) # falling edge detection on button 3
@@ -40,8 +40,8 @@ GPIO.output(led1_pin_get_ready, False);
 GPIO.output(led2_pin_smile, False);
 GPIO.output(led3_pin_process, False);
 GPIO.output(led4_pin_print, False);
-GPIO.output(led5_pin_button, False);
-GPIO.output(led6_pin_finished, False); #for some reason the pin turns on at the beginning of the program. why?????????????????????????????????
+#GPIO.output(led5_pin_button, False);
+#GPIO.output(led6_pin_finished, False); #for some reason the pin turns on at the beginning of the program. why?????????????????????????????????
 
 #################
 ### Functions ###
@@ -58,8 +58,8 @@ def shut_it_down(channel):
   GPIO.output(led2_pin_smile, True);
   GPIO.output(led3_pin_process, True);
   GPIO.output(led4_pin_print, True);
-  GPIO.output(led5_pin_button, True);
-  GPIO.output(led6_pin_finished, True);
+#  GPIO.output(led5_pin_button, True);
+#  GPIO.output(led6_pin_finished, True);
   time.sleep(3)
   os.system("sudo halt")
 
@@ -80,7 +80,7 @@ def blink(pin):
 # define the photo taking function for when the big button is pressed 
 def start_photobooth(): 
   
-  GPIO.output(led5_pin_button, False)
+#  GPIO.output(led5_pin_button, False)
   # delete files in folder on startup
 #  files = glob.glob(config.file_path + '*')
 #  for f in files:
@@ -127,9 +127,9 @@ def start_photobooth():
 
   time.sleep(config.restart_delay)
   # blink led6_pin_finished 50 times  
-  for i in range(0,5):  
-      blink(led6_pin_finished) 
-  GPIO.output(led5_pin_button, True)
+#  for i in range(0,5):  
+#      blink(led6_pin_finished) 
+#  GPIO.output(led5_pin_button, True)
 
 ####################
 ### Main Program ###
@@ -148,13 +148,13 @@ GPIO.output(led1_pin_get_ready, True); #light up the lights to show the app is r
 GPIO.output(led2_pin_smile, True);
 GPIO.output(led3_pin_process, True);
 GPIO.output(led4_pin_print, True);
-GPIO.output(led5_pin_button, True);
+#GPIO.output(led5_pin_button, True);
 time.sleep(3)
 GPIO.output(led1_pin_get_ready, False); #turn off the lights
 GPIO.output(led2_pin_smile, False);
 GPIO.output(led3_pin_process, False);
 GPIO.output(led4_pin_print, False);
-GPIO.output(led5_pin_button, False);
+#GPIO.output(led5_pin_button, False);
 
 while True:
     GPIO.wait_for_edge(button1_pin_start, GPIO.FALLING)
