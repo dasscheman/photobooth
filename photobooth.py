@@ -132,6 +132,7 @@ def start_photobooth():
     for i in range(0,5):  
         blink(led5_pin_ready) 
     GPIO.output(led5_pin_ready, True)
+    print "Finished and ready for new pictures."
 
 ####################
 ### Main Program ###
