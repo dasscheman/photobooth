@@ -18,6 +18,7 @@ led2_pin_smile = 19 # LED 2
 led3_pin_process = 21 # LED 3
 led4_pin_print = 23 # LED 4
 led5_pin_button = 13
+led6_pin_finished = 11
 button1_pin_start = 22 # pin for the big red button
 button2_pin_shutdown = 18 # pin for button to shutdown the pi
 button3_pin_reset = 16 # pin for button to end the program, but not shutdown the pi
@@ -31,6 +32,7 @@ GPIO.setup(led2_pin_smile, GPIO.OUT) # LED 2
 GPIO.setup(led3_pin_process, GPIO.OUT) # LED 3
 GPIO.setup(led4_pin_print, GPIO.OUT) # LED 4
 GPIO.setup(led5_pin_button, GPIO.OUT) # LED 5
+GPIO.setup(led6_pin_finished, GPIO.OUT) # LED 6
 GPIO.setup(button1_pin_start, GPIO.IN, pull_up_down=GPIO.PUD_UP) # falling edge detection on button 1
 GPIO.setup(button2_pin_shutdown, GPIO.IN, pull_up_down=GPIO.PUD_UP) # falling edge detection on button 2
 GPIO.setup(button3_pin_reset, GPIO.IN, pull_up_down=GPIO.PUD_UP) # falling edge detection on button 3
@@ -38,7 +40,8 @@ GPIO.output(led1_pin_get_ready, False);
 GPIO.output(led2_pin_smile, False);
 GPIO.output(led3_pin_process, False);
 GPIO.output(led4_pin_print, False);
-GPIO.output(led5_pin_button, False); #for some reason the pin turns on at the beginning of the program. why?????????????????????????????????
+GPIO.output(led5_pin_button, False);
+GPIO.output(led6_pin_finished, False); #for some reason the pin turns on at the beginning of the program. why?????????????????????????????????
 
 #################
 ### Functions ###
@@ -56,6 +59,7 @@ def shut_it_down(channel):
   GPIO.output(led3_pin_process, True);
   GPIO.output(led4_pin_print, True);
   GPIO.output(led5_pin_button, True);
+  GPIO.output(led6_pin_finished, True);
   time.sleep(3)
   os.system("sudo halt")
 
@@ -64,26 +68,15 @@ def exit_photobooth(channel):
   GPIO.output(led1_pin_get_ready, True);
   time.sleep(3)
   sys.exit()
-    
-#def clear_pics(foo): #why is this function being passed an arguments?
-#  #delete files in folder on startup
-#    files = glob.glob(config.file_path + '*')
-#    for f in files:
-#      os.remove(f) 
-#    #light the lights in series to show completed
-#    print "Deleted previous pics"
-#    GPIO.output(led1_pin_get_ready, False); #turn off the lights
-#    GPIO.output(led2_pin_smile, False);
-#    GPIO.output(led3_pin_process, False);
-#    GPIO.output(led4_pin_print, False);
-#    GPIO.output(led5_pin_button, False);
-#    pins = [led1_pin_get_ready, led2_pin_smile, led3_pin_process, led4_pin_print, led5_pin_button]
-#    for p in pins:
-#      GPIO.output(p, True); 
-#      sleep(0.25)
-#      GPIO.output(p, False);
-#      sleep(0.25) 
-#				
+  
+# blinking function  
+def blink(pin):  
+        GPIO.output(pin,True)  
+        time.sleep(0.5)  
+        GPIO.output(pin,False)  
+        time.sleep(0.5)  
+        return    
+			
 # define the photo taking function for when the big button is pressed 
 def start_photobooth(): 
   
@@ -133,6 +126,9 @@ def start_photobooth():
       GPIO.output(led4_pin_print, False) #turn off the LED
 
   time.sleep(config.restart_delay)
+  # blink led6_pin_finished 50 times  
+  for i in range(0,5):  
+      blink(led6_pin_finished) 
   GPIO.output(led5_pin_button, True)
 
 ####################
