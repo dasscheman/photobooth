@@ -68,9 +68,9 @@ def exit_photobooth(channel):
 # blinking function  
 def blink(pin):  
     GPIO.output(pin,True)  
-    time.sleep(0.5)  
+    time.sleep(1)  
     GPIO.output(pin,False)  
-    time.sleep(0.5)  
+    time.sleep(1)  
     return    
 			
 # define the photo taking function for when the big button is pressed 
@@ -86,31 +86,30 @@ def start_photobooth():
     GPIO.output(led1_pin_get_ready, True);
     sleep(config.prep_delay) 
     sleep(2) #warm up camera
-    GPIO.output(led1_pin_get_ready, False)
 
     ################################# Begin Step 2 #################################
     print "Taking pics" 
     for i in range(0, config.total_pics):
+        GPIO.output(led1_pin_get_ready, False)
         GPIO.output(led2_pin_smile, True) #turn on the LED
         now = time.strftime("%Y-%m-%d-%H:%M:%S") #get the current date and time for the start of the filename
         gpout = subprocess.check_output("gphoto2 --capture-image-and-download --filename " + config.file_path + now + ".jpg", stderr=subprocess.STDOUT, shell=True)
-        print(gpout)
-        sleep(0.25) #pause the LED on for just a bit
         GPIO.output(led2_pin_smile, False) #turn off the LED
-        sleep(config.capture_delay) # pause in-between shots
+        print(gpout)
         if i == config.total_pics-1:
-          break
+            break
+        else:
+            #sleep(0.25) #pause the LED on for just a bit
+            GPIO.output(led1_pin_get_ready, True);
+            sleep(config.capture_delay) # pause in-between shots  
 
     ########################### Begin Step 3 #################################  
+    GPIO.output(led3_pin_process, True) #turn on the LED
     if config.post_online:
         print "Creating an animated gif" 
-
-        GPIO.output(led3_pin_process, True) #turn on the LED
         graphicsmagick = "gm convert -delay " + str(config.gif_delay) + " " + config.file_path + "*.jpg " + config.file_path_gif + now + ".gif" 
         os.system(graphicsmagick) #make the .gif
         print "Uploading to pibooth."
-
-        GPIO.output(led3_pin_process, False) #turn off the LED
 
     ########################### Begin Step 4 #################################
 
@@ -119,11 +118,16 @@ def start_photobooth():
         print "Start printing"
         GPIO.output(led4_pin_print, True) #turn on the LED
         # subprocess.call("sudo /home/pi/photobooth/scripts/print.sh", shell=True)
-        time.sleep(2);
+        while subprocess.call("lpstat -R", shell=True):
+            time.sleep(2);
+            print(subprocess.call("lpstat -R", shell=True));
+            
+        print(subprocess.call("lpstat -R", shell=True));
         GPIO.output(led4_pin_print, False) #turn off the LED
 
     time.sleep(config.restart_delay)
-    # blink led5_pin_finished 50 times  
+    GPIO.output(led3_pin_process, False) #turn off the LED
+    # blink led5_pin_finished 5 times  
     for i in range(0,5):  
         blink(led5_pin_ready) 
     GPIO.output(led5_pin_ready, True)
