@@ -129,6 +129,11 @@ def start_photobooth():
         blink(led5_pin_ready) 
     GPIO.output(led5_pin_ready, True)
     print "Finished and ready for new pictures."
+    GPIO.remove_event_detect(button2_pin_shutdown)
+    GPIO.add_event_detect(button2_pin_shutdown, GPIO.BOTH, callback=shut_it_down, bouncetime=100) 
+    GPIO.remove_event_detect(button3_pin_reset)
+    GPIO.add_event_detect(button3_pin_reset, GPIO.FALLING, callback=exit_photobooth, bouncetime=300)
+    
 
 ####################
 ### Main Program ###
@@ -157,5 +162,3 @@ while True:
     GPIO.wait_for_edge(button1_pin_start, GPIO.FALLING)
     time.sleep(0.2) #debounce
     start_photobooth()
-    GPIO.setup(button2_pin_shutdown, GPIO.IN, pull_up_down=GPIO.PUD_UP) # falling edge detection on button 2
-    GPIO.setup(button3_pin_reset, GPIO.IN, pull_up_down=GPIO.PUD_UP) # falling edge detection on button 3
