@@ -157,3 +157,5 @@ while True:
     GPIO.wait_for_edge(button1_pin_start, GPIO.FALLING)
     time.sleep(0.2) #debounce
     start_photobooth()
+    GPIO.setup(button2_pin_shutdown, GPIO.IN, pull_up_down=GPIO.PUD_UP) # falling edge detection on button 2
+    GPIO.setup(button3_pin_reset, GPIO.IN, pull_up_down=GPIO.PUD_UP) # falling edge detection on button 3
