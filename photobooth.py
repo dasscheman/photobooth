@@ -34,11 +34,6 @@ GPIO.setup(led5_pin_ready, GPIO.OUT, initial=0) # LED 5
 GPIO.setup(button1_pin_start, GPIO.IN, pull_up_down=GPIO.PUD_UP) # falling edge detection on button 1
 GPIO.setup(button2_pin_shutdown, GPIO.IN, pull_up_down=GPIO.PUD_UP) # falling edge detection on button 2
 GPIO.setup(button3_pin_reset, GPIO.IN, pull_up_down=GPIO.PUD_UP) # falling edge detection on button 3
-#GPIO.output(led1_pin_get_ready, False);
-#GPIO.output(led2_pin_smile, False);
-#GPIO.output(led3_pin_process, False);
-#GPIO.output(led4_pin_print, False);
-#GPIO.output(led5_pin_ready, False); #for some reason the pin turns on at the beginning of the program. why?????????????????????????????????
 
 #################
 ### Functions ###
@@ -133,6 +128,14 @@ def start_photobooth():
         blink(led5_pin_ready) 
     GPIO.output(led5_pin_ready, True)
     print "Finished and ready for new pictures."
+    # when a falling edge is detected on button2_pin and button3_pin, regardless of whatever   
+    # else is happening in the program, their function will be run   
+    GPIO.add_event_detect(button2_pin_shutdown, GPIO.FALLING, callback=shut_it_down, bouncetime=300) 
+
+    #choose one of the two following lines to be un-commented
+    GPIO.add_event_detect(button3_pin_reset, GPIO.FALLING, callback=exit_photobooth, bouncetime=300) #use third button to exit python. Good while developing
+
+
 
 ####################
 ### Main Program ###
@@ -144,7 +147,6 @@ GPIO.add_event_detect(button2_pin_shutdown, GPIO.FALLING, callback=shut_it_down,
 
 #choose one of the two following lines to be un-commented
 GPIO.add_event_detect(button3_pin_reset, GPIO.FALLING, callback=exit_photobooth, bouncetime=300) #use third button to exit python. Good while developing
-#GPIO.add_event_detect(button3_pin, GPIO.FALLING, callback=clear_pics, bouncetime=300) #use the third button to clear pics stored on the SD card from previous events
 
 print "Photo booth app running..." 
 GPIO.output(led1_pin_get_ready, True); #light up the lights to show the app is running
