@@ -40,8 +40,9 @@ GPIO.setup(button3_pin_reset, GPIO.IN, pull_up_down=GPIO.PUD_UP) # falling edge 
 #################
 
 def cleanup():
-  print('Ended abruptly')
-  GPIO.cleanup()
+    print('Ended abruptly')
+    GPIO.cleanup()
+  
 atexit.register(cleanup)
 
 def shut_it_down(channel):  
@@ -128,14 +129,6 @@ def start_photobooth():
         blink(led5_pin_ready) 
     GPIO.output(led5_pin_ready, True)
     print "Finished and ready for new pictures."
-    # when a falling edge is detected on button2_pin and button3_pin, regardless of whatever   
-    # else is happening in the program, their function will be run   
-    GPIO.add_event_detect(button2_pin_shutdown, GPIO.FALLING, callback=shut_it_down, bouncetime=300) 
-
-    #choose one of the two following lines to be un-commented
-    GPIO.add_event_detect(button3_pin_reset, GPIO.FALLING, callback=exit_photobooth, bouncetime=300) #use third button to exit python. Good while developing
-
-
 
 ####################
 ### Main Program ###
