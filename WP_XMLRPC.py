@@ -34,36 +34,22 @@ contact@waqasjamal.com
 ------------------------------------------In DETAIL--------------------------------		
 '''
 class Custom_WP_XMLRPC:
-    def post_article(self,wpUrl,wpUserName,wpPassword,articleTitle, articleCategories, articleContent, articleTags, PhotoUrl):
-#        self.path=os.getcwd()+"\\00000001.jpg"
-#        self.articlePhotoUrl=PhotoUrl
+    def post_article(self,wpUrl,wpUserName,wpPassword,articleTitle, articleCategories, articleContent, articleTags, PhotoName, PhotoPath):
         self.wpUrl=wpUrl
         self.wpUserName=wpUserName
         self.wpPassword=wpPassword
-        #Download File
-#        f = open(self.path,'wb')
-#        f.write(urllib.urlopen(self.articlePhotoUrl).read())
-#        f.close()
+        
         #Upload to WordPress
         client = Client(self.wpUrl,self.wpUserName,self.wpPassword)
-        filename = PhotoUrl #self.path
+        filename = PhotoPath +  PhotoName
         # prepare metadata
-        data = {'name': 'picture.jpg','type': 'image/jpg',}
+        data = {'name': PhotoName,'type': 'image/gif',}
 
         # read the binary file and let the XMLRPC library encode it into base64
         with open(filename, 'rb') as img:
                 data['bits'] = xmlrpc_client.Binary(img.read())
         response = client.call(media.UploadFile(data))
-        attachment_id = response['id']
-        #Post
-        post = WordPressPost()
-        post.title = articleTitle
-        post.content = articleContent
-        post.terms_names = { 'post_tag': articleTags,'category': articleCategories}
-        post.post_status = 'publish'
-        post.thumbnail = attachment_id
-        post.id = client.call(posts.NewPost(post))
-        print 'Post Successfully posted. Its Id is: ',post.id
+        print 'Post Successfully posted. Its Id is: ',response['id']
 
 
 

@@ -9,7 +9,7 @@ import subprocess
 import sys
 import time
 from time import sleep
-from WP_XMLRP import Custom_WP_XMLRPC
+from WP_XMLRPC import Custom_WP_XMLRPC
 
 ########################
 ### Variables Config ###
@@ -102,9 +102,11 @@ def start_photobooth():
 
     ########################### Begin Step 3 #################################  
     GPIO.output(led3_pin_process, True) #turn on the LED
+
     if config.post_online:
         print "Creating an animated gif" 
-        graphicsmagick = "gm convert -delay " + str(config.gif_delay) + " " + config.file_path + "*.jpg " + config.file_path_gif + now + ".gif" 
+        gif_name =  now + ".gif"
+        graphicsmagick = "gm convert -delay " + str(config.gif_delay) + " " + config.file_path + "*.jpg " + config.file_path_gif + gif_name 
         os.system(graphicsmagick) #make the .gif
         print "Uploading to pibooth."
 
@@ -114,13 +116,14 @@ def start_photobooth():
             #########################################
 
             #Url of Image on the internet
-            ariclePhotoUrl='http://i1.tribune.com.pk/wp-content/uploads/2013/07/584065-twitter-1375197036-960-640x480.jpg' 
+            PhotoName = gif_name 
+            PhotoPath = config.file_path_gif 
             # Dont forget the /xmlrpc.php cause thats your posting adress for XML Server
             wpUrl='http://zomerkamp.debison/xmlrpc.php' 
             #WordPress Username
-            wpUserName='Photobooth  '
+            wpUserName='daan'
             #WordPress Password
-            wpPassword='smile'
+            wpPassword='Daan'
             #Post Title
             articleTitle='Groeten uit Echternach'
             #Post Body/Description
@@ -135,7 +138,7 @@ def start_photobooth():
             #########################################
             xmlrpc_object	=	Custom_WP_XMLRPC()
             #On Post submission this function will print the post id
-            xmlrpc_object.post_article(wpUrl,wpUserName,wpPassword,articleTitle, articleCategories, articleContent, articleTags,ariclePhotoUrl)
+            xmlrpc_object.post_article(wpUrl,wpUserName,wpPassword,articleTitle, articleCategories, articleContent, articleTags, PhotoName, PhotoPath)
     
     ########################### Begin Step 4 #################################
 
