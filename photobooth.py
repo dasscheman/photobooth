@@ -121,24 +121,16 @@ def start_photobooth():
             # Dont forget the /xmlrpc.php cause thats your posting adress for XML Server
             wpUrl='http://zomerkamp.debison/xmlrpc.php' 
             #WordPress Username
-            wpUserName='daan'
+            wpUserName='Photobooth'
             #WordPress Password
-            wpPassword='Daan'
-            #Post Title
-            articleTitle='Groeten uit Echternach'
-            #Post Body/Description
-            articleContent='We hebben mooi weer en het eten is lekker.'
-            #list of tags
-            articleTags=['foto','photobooth'] 
-            #list of Categories
-            articleCategories=['zomaar','post'] 
+            wpPassword='smile'
 
             #########################################
             # Creating Class object & calling the xml rpc custom post Function
             #########################################
             xmlrpc_object	=	Custom_WP_XMLRPC()
             #On Post submission this function will print the post id
-            xmlrpc_object.post_article(wpUrl,wpUserName,wpPassword,articleTitle, articleCategories, articleContent, articleTags, PhotoName, PhotoPath)
+            xmlrpc_object.post_article(wpUrl, wpUserName, wpPassword, PhotoName, PhotoPath)
     
     ########################### Begin Step 4 #################################
 

@@ -34,7 +34,7 @@ contact@waqasjamal.com
 ------------------------------------------In DETAIL--------------------------------		
 '''
 class Custom_WP_XMLRPC:
-    def post_article(self,wpUrl,wpUserName,wpPassword,articleTitle, articleCategories, articleContent, articleTags, PhotoName, PhotoPath):
+    def post_article(self, wpUrl, wpUserName, wpPassword, PhotoName, PhotoPath):
         self.wpUrl=wpUrl
         self.wpUserName=wpUserName
         self.wpPassword=wpPassword
