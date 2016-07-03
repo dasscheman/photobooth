@@ -133,12 +133,15 @@ def start_photobooth():
             xmlrpc_object.post_article(wpUrl, wpUserName, wpPassword, PhotoName, PhotoPath)
     
     ########################### Begin Step 4 #################################
-
-    subprocess.call("sudo /home/pi/photobooth/scripts/assemble.sh", shell=True)
+    if config.print_label:
+        subprocess.call("sudo /home/pi/photobooth/scripts/assemble_label.sh", shell=True)
+    else:
+        subprocess.call("sudo /home/pi/photobooth/scripts/assemble.sh", shell=True)
+    
     if config.print_pic:
         print "Start printing"
         GPIO.output(led4_pin_print, True) #turn on the LED
-        # subprocess.call("sudo /home/pi/photobooth/scripts/print.sh", shell=True)
+        subprocess.call("sudo /home/pi/photobooth/scripts/print.sh", shell=True)
         time.sleep(2);
         while subprocess.call("lpstat -R", shell=True):
             time.sleep(2);
