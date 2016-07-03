@@ -9,6 +9,7 @@ import subprocess
 import sys
 import time
 from time import sleep
+from WP_XMLRP import Custom_WP_XMLRPC
 
 ########################
 ### Variables Config ###
@@ -107,6 +108,35 @@ def start_photobooth():
         os.system(graphicsmagick) #make the .gif
         print "Uploading to pibooth."
 
+        if config.post_blog:
+            #########################################
+            # POST & Wp Credentials Detail #
+            #########################################
+
+            #Url of Image on the internet
+            ariclePhotoUrl='http://i1.tribune.com.pk/wp-content/uploads/2013/07/584065-twitter-1375197036-960-640x480.jpg' 
+            # Dont forget the /xmlrpc.php cause thats your posting adress for XML Server
+            wpUrl='http://zomerkamp.debison/xmlrpc.php' 
+            #WordPress Username
+            wpUserName='Photobooth  '
+            #WordPress Password
+            wpPassword='smile'
+            #Post Title
+            articleTitle='Groeten uit Echternach'
+            #Post Body/Description
+            articleContent='We hebben mooi weer en het eten is lekker.'
+            #list of tags
+            articleTags=['foto','photobooth'] 
+            #list of Categories
+            articleCategories=['zomaar','post'] 
+
+            #########################################
+            # Creating Class object & calling the xml rpc custom post Function
+            #########################################
+            xmlrpc_object	=	Custom_WP_XMLRPC()
+            #On Post submission this function will print the post id
+            xmlrpc_object.post_article(wpUrl,wpUserName,wpPassword,articleTitle, articleCategories, articleContent, articleTags,ariclePhotoUrl)
+    
     ########################### Begin Step 4 #################################
 
     subprocess.call("sudo /home/pi/photobooth/scripts/assemble.sh", shell=True)
