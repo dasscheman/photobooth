@@ -142,12 +142,7 @@ def start_photobooth():
         print "Start printing"
         GPIO.output(led4_pin_print, True) #turn on the LED
         subprocess.call("sudo /home/pi/photobooth/scripts/print.sh", shell=True)
-        time.sleep(2);
-        while subprocess.call("lpstat -R", shell=True):
-            time.sleep(2);
-            print(subprocess.call("lpstat -R", shell=True));
-            
-        print(subprocess.call("lpstat -R", shell=True));
+        time.sleep(75);
         GPIO.output(led4_pin_print, False) #turn off the LED
 
     time.sleep(config.restart_delay)
