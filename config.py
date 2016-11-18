@@ -2,9 +2,9 @@
 file_path = '/home/pi/photobooth/pics/' # path to save images tempory
 file_path_gif = '/home/pi/Website/pibooth/web/photobooth/' # path to save images for site
 
-post_online = 1 # default 1. Change to 0 if you don't want to upload pics.
-print_pic = 0 # default 1. Change to 0 if you don't want to print pics.
-post_blog = 1 # default 1. Change to 0 if you don't want to post to WP site.
+post_online = 0 # default 1. Change to 0 if you don't want to upload pics.
+print_pic = 1 # default 1. Change to 0 if you don't want to print pics.
+post_blog = 0 # default 1. Change to 0 if you don't want to post to WP site.
 print_label = 1 # default 1. Change to 0 if you don't want to print label.
 total_pics = 4 # number of pics to be taken
 capture_delay = 1 # delay between pics
