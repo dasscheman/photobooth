@@ -47,7 +47,7 @@ def cleanup():
 atexit.register(cleanup)
 
 def shut_it_down(channel):  
-    time.sleep(0.1)         # need to filter out the false positive of some power fluctuation
+    time.sleep(2)         # need to filter out the false positive of some power fluctuation
     if GPIO.input(button2_pin_shutdown) != GPIO.HIGH:
         return
     print "Shutting down..." 
@@ -60,7 +60,7 @@ def shut_it_down(channel):
     os.system("sudo halt")
 
 def exit_photobooth(channel):
-    time.sleep(0.1)         # need to filter out the false positive of some power fluctuation
+    time.sleep(2)         # need to filter out the false positive of some power fluctuation
     if GPIO.input(button3_pin_reset) != GPIO.HIGH:
         return
     print "Photo booth app ended. RPi still running" 
@@ -170,10 +170,10 @@ def start_photobooth():
 
 # when a falling edge is detected on button2_pin and button3_pin, regardless of whatever   
 # else is happening in the program, their function will be run   
-GPIO.add_event_detect(button2_pin_shutdown, GPIO.RISING, callback=shut_it_down, bouncetime=300) 
+GPIO.add_event_detect(button2_pin_shutdown, GPIO.FALLING, callback=shut_it_down, bouncetime=300) 
 
 #choose one of the two following lines to be un-commented
-GPIO.add_event_detect(button3_pin_reset, GPIO.RISING, callback=exit_photobooth, bouncetime=300) #use third button to exit python. Good while developing
+GPIO.add_event_detect(button3_pin_reset, GPIO.FALLING, callback=exit_photobooth, bouncetime=300) #use third button to exit python. Good while developing
 
 print "Photo booth app running..." 
 GPIO.output(led1_pin_get_ready, True); #light up the lights to show the app is running
