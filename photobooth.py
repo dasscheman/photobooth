@@ -50,7 +50,7 @@ def shut_it_down(channel):
     time.sleep(2)         # need to filter out the false positive of some power fluctuation
     if GPIO.input(button2_pin_shutdown) != GPIO.HIGH:
         return
-    print "Shutting down..." 
+    print('Shutting down...') 
     GPIO.output(led1_pin_get_ready, True);
     GPIO.output(led2_pin_smile, True);
     GPIO.output(led3_pin_process, True);
@@ -63,7 +63,7 @@ def exit_photobooth(channel):
     time.sleep(2)         # need to filter out the false positive of some power fluctuation
     if GPIO.input(button3_pin_reset) != GPIO.HIGH:
         return
-    print "Photo booth app ended. RPi still running" 
+    print('Photo booth app ended. RPi still running') 
     GPIO.output(led1_pin_get_ready, True);
     time.sleep(3)
     sys.exit()
@@ -78,20 +78,19 @@ def blink(pin):
 			
 # define the photo taking function for when the big button is pressed 
 def start_photobooth(): 
-  
     GPIO.output(led5_pin_ready, False)
     # delete files in folder on startup
     files = glob.glob(config.file_path + '*')
     for f in files:
       os.remove(f)
     ################################# Begin Step 1 ################################# 
-    print "Get Ready"
+    print('Get Ready')
     GPIO.output(led1_pin_get_ready, True);
     sleep(config.prep_delay) 
     sleep(2) #warm up camera
 
     ################################# Begin Step 2 #################################
-    print "Taking pics" 
+    print('Taking pics') 
     for i in range(0, config.total_pics):
         GPIO.output(led1_pin_get_ready, False)
         GPIO.output(led2_pin_smile, True) #turn on the LED
@@ -110,11 +109,11 @@ def start_photobooth():
     GPIO.output(led3_pin_process, True) #turn on the LED
 
     if config.post_online:
-        print "Creating an animated gif" 
+        print('Creating an animated gif') 
         gif_name =  now + ".gif"
         graphicsmagick = "gm convert -delay " + str(config.gif_delay) + " " + config.file_path + "*.jpg " + config.file_path_gif + gif_name 
         os.system(graphicsmagick) #make the .gif
-        print "Uploading to pibooth."
+        print('Uploading to pibooth.')
 
         if config.post_blog:
             #########################################
@@ -145,7 +144,7 @@ def start_photobooth():
         subprocess.call("sudo /home/pi/photobooth/scripts/assemble.sh", shell=True)
     
     if config.print_pic:
-        print "Start printing"
+        print('Start printing')
         GPIO.output(led4_pin_print, True) #turn on the LED
         subprocess.call("sudo /home/pi/photobooth/scripts/print.sh", shell=True)
         time.sleep(75);
@@ -157,7 +156,7 @@ def start_photobooth():
     for i in range(0,5):  
         blink(led5_pin_ready) 
     GPIO.output(led5_pin_ready, True)
-    print "Finished and ready for new pictures."
+    print('Finished and ready for new pictures.')
     GPIO.remove_event_detect(button2_pin_shutdown)
     GPIO.add_event_detect(button2_pin_shutdown, GPIO.RISING, callback=shut_it_down, bouncetime=100) 
     GPIO.remove_event_detect(button3_pin_reset)
@@ -175,7 +174,7 @@ GPIO.add_event_detect(button2_pin_shutdown, GPIO.FALLING, callback=shut_it_down,
 #choose one of the two following lines to be un-commented
 GPIO.add_event_detect(button3_pin_reset, GPIO.FALLING, callback=exit_photobooth, bouncetime=300) #use third button to exit python. Good while developing
 
-print "Photo booth app running..." 
+print('Photo booth app running...')
 GPIO.output(led1_pin_get_ready, True); #light up the lights to show the app is running
 GPIO.output(led2_pin_smile, True);
 GPIO.output(led3_pin_process, True);
