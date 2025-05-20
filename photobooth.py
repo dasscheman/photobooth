@@ -9,7 +9,7 @@ import subprocess
 import sys
 import time
 from time import sleep
-from WP_XMLRPC import Custom_WP_XMLRPC
+#from WP_XMLRPC import Custom_WP_XMLRPC
 
 ########################
 ### Variables Config ###
@@ -60,13 +60,13 @@ def shut_it_down(channel):
     os.system("sudo halt")
 
 def exit_photobooth(channel):
-    time.sleep(2)         # need to filter out the false positive of some power fluctuation
-    if GPIO.input(button3_pin_reset) != GPIO.HIGH:
-        return
+    #time.sleep(2)         # need to filter out the false positive of some power fluctuation
+    #if GPIO.input(button3_pin_reset) != GPIO.HIGH:
+    #    return
     print('Photo booth app ended. RPi still running') 
-    GPIO.output(led1_pin_get_ready, True);
-    time.sleep(3)
-    sys.exit()
+    #GPIO.output(led1_pin_get_ready, True);
+    #time.sleep(3)
+    #sys.exit()
   
 # blinking function  
 def blink(pin):  

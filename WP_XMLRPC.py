@@ -49,7 +49,7 @@ class Custom_WP_XMLRPC:
         with open(filename, 'rb') as img:
                 data['bits'] = xmlrpc_client.Binary(img.read())
         response = client.call(media.UploadFile(data))
-        print 'Post Successfully posted. Its Id is: ',response['id']
+        print('Post Successfully posted. Its Id is: ',response['id'])
 
 
 
